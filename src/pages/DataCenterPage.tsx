@@ -1,4 +1,5 @@
-import { Server, Zap, Wind, Shield, Network, Lock, Award, MapPin } from 'lucide-react';
+import { Server, Zap, Wind, Shield, Network, Lock, Award, MapPin, Cloud, Database, Activity, Users } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const infrastructure = [
   {
@@ -78,6 +79,51 @@ const carriers = [
   'VSNL',
   'Sify',
   'NTT Communications',
+];
+
+const realTimeMetrics = [
+  { icon: Activity, label: 'Uptime', value: '99.982%', color: 'text-green-400' },
+  { icon: Zap, label: 'Power Load', value: '65%', color: 'text-yellow-400' },
+  { icon: Wind, label: 'Temperature', value: '21°C', color: 'text-cyan-400' },
+  { icon: Database, label: 'Storage Used', value: '12.4 PB', color: 'text-blue-400' },
+  { icon: Network, label: 'Network Traffic', value: '8.2 Tbps', color: 'text-purple-400' },
+  { icon: Users, label: 'Active Clients', value: '1,247', color: 'text-orange-400' },
+];
+
+const technicalSpecs = [
+  {
+    category: 'Electrical Systems',
+    items: [
+      { label: 'Total Power Capacity', value: '10 MW' },
+      { label: 'UPS Capacity', value: '5 MW (N+1)' },
+      { label: 'Generator Capacity', value: '12 MW (N+1)' },
+      { label: 'Fuel Storage', value: '72 hours @ full load' },
+      { label: 'Power Distribution', value: '480V/208V 3-phase' },
+      { label: 'PDU Redundancy', value: 'Dual-feed A/B' },
+    ],
+  },
+  {
+    category: 'Cooling Infrastructure',
+    items: [
+      { label: 'Cooling Capacity', value: '2,500 tons' },
+      { label: 'CRAC Units', value: '24 units (N+1)' },
+      { label: 'Chiller Plants', value: '3x 1,000 ton chillers' },
+      { label: 'Target Temperature', value: '20-22°C ±1°C' },
+      { label: 'Humidity Range', value: '40-60% RH' },
+      { label: 'Hot Aisle Containment', value: 'Full deployment' },
+    ],
+  },
+  {
+    category: 'Network Infrastructure',
+    items: [
+      { label: 'Total Bandwidth', value: '12 Tbps' },
+      { label: 'Carrier Connections', value: '8 Tier-1 providers' },
+      { label: 'Peering Points', value: 'Direct IX peering' },
+      { label: 'Edge Routers', value: 'Cisco ASR 9000 series' },
+      { label: 'Core Switches', value: 'Juniper QFX10000' },
+      { label: 'Average Latency', value: '< 2ms (India)' },
+    ],
+  },
 ];
 
 export default function DataCenterPage() {
@@ -161,6 +207,58 @@ export default function DataCenterPage() {
                   </div>
                 );
               })}
+            </div>
+          </div>
+
+          <div className="mb-20">
+            <h2 className="text-3xl font-bold text-white text-center mb-12">
+              Real-Time <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Monitoring</span>
+            </h2>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+              {realTimeMetrics.map((metric, index) => {
+                const Icon = metric.icon;
+                return (
+                  <div
+                    key={metric.label}
+                    className="bg-slate-800/30 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300 hover:scale-105 animate-fadeInUp"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <Icon className={`h-8 w-8 ${metric.color}`} />
+                      <div className="text-xs px-2 py-1 bg-green-500/20 text-green-400 rounded-full">Live</div>
+                    </div>
+                    <div className="text-3xl font-bold text-white mb-1">{metric.value}</div>
+                    <div className="text-sm text-gray-400">{metric.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mb-20">
+            <h2 className="text-3xl font-bold text-white text-center mb-12">
+              Technical <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Specifications</span>
+            </h2>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              {technicalSpecs.map((spec, index) => (
+                <div
+                  key={spec.category}
+                  className="bg-slate-800/30 backdrop-blur-sm rounded-2xl p-8 border border-slate-700/50 animate-fadeInUp"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <h3 className="text-xl font-bold text-white mb-6 pb-3 border-b border-cyan-500/30">{spec.category}</h3>
+                  <div className="space-y-4">
+                    {spec.items.map((item) => (
+                      <div key={item.label} className="flex justify-between items-start">
+                        <span className="text-sm text-gray-400 flex-1">{item.label}</span>
+                        <span className="text-sm text-white font-medium ml-4 text-right">{item.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

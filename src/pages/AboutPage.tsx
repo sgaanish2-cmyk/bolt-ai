@@ -1,4 +1,4 @@
-import { Building2, Users, Award, Target, Heart, Lightbulb } from 'lucide-react';
+import { Building2, Users, Award, Target, Heart, Lightbulb, Shield } from 'lucide-react';
 
 const stats = [
   { label: 'Years in Business', value: '12+' },
